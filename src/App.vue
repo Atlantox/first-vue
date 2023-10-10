@@ -1,7 +1,7 @@
 <script setup>
 import {ref} from 'vue'
 
-const maxAvailablePoints = 35;
+const maxAvailablePoints = 25;
 const availablePoints = ref(maxAvailablePoints);
 
 const tableHead = [
@@ -80,14 +80,18 @@ const modifyStatistic = (statisticIndex, value) => {
 const getDiceModifier = (statistic) => {
   const normalStat = 10;
   const diff = statistic.value - normalStat;
-  if(diff < 0) return Math.ceil(diff / 2);
-  else return '+' + Math.floor(diff / 2);
+  let result = 0;
+  if(diff < 0) result = Math.ceil(diff / 2);
+  else result = Math.floor(diff / 2);
+  
+  if(result > 0) return '+' + result;
+  else return result;
 };
 
 const getDiceModifierColor = (value) => {
-  if (value === 0) return 'text-white';
-  else if (value > 0) return 'text-green';
-  else return 'text-red';
+  if (value > 0) return 'text-green'; 
+  else if (value < 0) return 'text-red';
+  else return 'text-white';
 };
 </script>
 
